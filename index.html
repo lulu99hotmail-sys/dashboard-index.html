@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>رقيب | بوابة الرقابة الذكية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Reem+Kufi:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050f0b;--p1:#0b1e17;--p2:#102a20;--line:rgba(212,175,55,.28);--gold:#d4af37;--gold2:#f2dc94;--em:#2fd37a;--red:#ef4444;--tx:#f5eedb;--mut:#a9b8ac}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tajawal,system-ui,sans-serif;background:radial-gradient(1200px 600px at 80% -10%,#12382a 0,var(--bg) 60%);color:var(--tx);min-height:100vh;display:grid;grid-template-columns:230px 1fr}
+aside{background:linear-gradient(180deg,#081a13,#040c09);border-inline-end:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:6px}
+.logo{text-align:center;margin-bottom:14px}
+.logo b{display:block;font:700 42px "Reem Kufi",serif;color:var(--gold2);line-height:1.1}
+.logo small{color:var(--gold);font-size:13px}
+nav a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:var(--mut);text-decoration:none;font-weight:500;border:1px solid transparent;cursor:pointer}
+nav a::before{content:"◆";font-size:9px;color:var(--gold)}
+nav a.on,nav a:hover{color:var(--gold2);background:linear-gradient(90deg,rgba(212,175,55,.18),transparent);border-color:var(--line)}
+nav .badge{margin-inline-start:auto;background:var(--red);color:#fff;border-radius:99px;font-size:11px;padding:1px 7px}
+main{padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+header{display:flex;justify-content:space-between;align-items:center}
+header h1{font:700 26px "Reem Kufi",serif;color:var(--gold2)}
+header p{color:var(--mut);font-size:13px}
+#clock{color:var(--gold);font-weight:700;direction:ltr}
+.card{background:linear-gradient(160deg,var(--p2),var(--p1));border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(242,220,148,.08)}
+.card h3{font-size:16px;color:var(--gold2);margin-bottom:12px;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi small{color:var(--mut);font-size:13px}
+.kpi strong{display:block;font-size:30px;font-weight:800;margin:2px 0}
+.kpi em{font-style:normal;font-size:13px;color:var(--em)}
+.kpi.warn strong,.kpi.warn small{color:#ff8b8b}.kpi.gold strong{color:var(--gold2)}
+.mid{display:grid;grid-template-columns:1fr 360px;gap:14px}
+.scene{position:relative;overflow:hidden;padding:0;min-height:380px;display:grid;grid-template-columns:1fr 230px}
+.live{position:absolute;top:12px;right:12px;z-index:3;background:rgba(5,15,11,.85);border:1px solid var(--line);border-radius:99px;padding:6px 14px;font-size:13px;display:flex;gap:8px;align-items:center}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--em);box-shadow:0 0 10px var(--em);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.gate{position:relative;background:linear-gradient(#1c3a30,#0a1a14 70%)}
+.gate svg{width:100%;height:100%;display:block}
+.beam{position:absolute;inset-inline:8%;height:3px;top:15%;background:linear-gradient(90deg,transparent,var(--gold2),transparent);box-shadow:0 0 18px var(--gold),0 0 40px rgba(212,175,55,.6);animation:scan 3.2s ease-in-out infinite}
+@keyframes scan{0%,100%{top:14%}50%{top:82%}}
+.info{background:rgba(4,12,9,.7);border-inline-start:1px solid var(--line);padding:14px;display:flex;flex-direction:column;justify-content:space-around}
+.info div{border-bottom:1px solid rgba(212,175,55,.15);padding-bottom:8px}
+.info small{color:var(--mut);font-size:12px}.info b{display:block;font-size:19px}
+.result .head{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.tick{width:54px;height:54px;border-radius:50%;background:var(--em);display:grid;place-items:center;font-size:30px;color:#04140c;flex:none;box-shadow:0 0 22px rgba(47,211,122,.5)}
+.tick.bad{background:var(--red);box-shadow:0 0 22px rgba(239,68,68,.5)}
+.result h2{font-size:22px;color:var(--em)}.result h2.bad{color:#ff8b8b}
+.meter{height:8px;background:#0a1712;border-radius:9px;overflow:hidden;margin:6px 0 12px}
+.meter span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--em));transition:width .8s}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{flex:1;font:inherit;font-size:12px;padding:7px 4px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--mut);cursor:pointer}
+.tabs button.on{background:linear-gradient(var(--gold),#a8862a);color:#1a1405;font-weight:700}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(212,175,55,.12);font-size:14px}
+.row span{color:var(--gold)}.row b.g{color:var(--em)}.row b.r{color:#ff8b8b}
+.bot{display:grid;grid-template-columns:1fr 1fr 1fr 1.35fr;gap:14px}
+.dates{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;background:#1a120b;border:1px solid #4a3620;border-radius:10px;padding:10px}
+.d{aspect-ratio:1.3;border-radius:46% 54% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 35% 30%,#d9722f,#7a2d10 75%);border:2px solid #4ade80;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px #000}
+.d.x{border-color:var(--red);background:radial-gradient(circle at 35% 30%,#a33,#4a1010 75%)}
+.stats{margin-top:10px;font-size:13px}
+.nir{height:150px;border-radius:10px;background:#000;display:grid;place-items:center;position:relative;overflow:hidden}
+.nir svg{width:90%}.hot{animation:pulse 1.8s infinite}
+.layer{margin:7px 0;font-size:13px}
+.layer .bar{height:9px;border-radius:9px;background:#0a1712;margin-top:3px;overflow:hidden}
+.layer .bar i{display:block;height:100%;background:linear-gradient(90deg,#8a6d1c,var(--gold2))}
+.note{margin-top:10px;font-size:12px;color:var(--mut);border-top:1px dashed var(--line);padding-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{color:var(--mut);font-weight:500;text-align:start;padding:6px 4px}
+td{padding:9px 4px;border-top:1px solid rgba(212,175,55,.12)}
+.ok{color:var(--em)}.no{color:#ff8b8b}
+tr.new{animation:flash 1.6s}@keyframes flash{from{background:rgba(212,175,55,.3)}}
+[hidden]{display:none!important}
+.two{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}
+.btn{font:inherit;padding:7px 16px;border-radius:9px;border:1px solid var(--line);background:linear-gradient(var(--gold),#a8862a);color:#1a1405;font-weight:700;cursor:pointer}
+.btn.g{background:transparent;color:var(--gold2)}.btn:disabled{opacity:.5;cursor:wait}
+.s{font:inherit;background:#07140f;border:1px solid var(--line);color:var(--tx);border-radius:9px;padding:8px 12px;width:240px}
+.bar2{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.st{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid rgba(212,175,55,.12)}
+#v-page .head{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+#v-page .kpis{display:grid;gap:12px}
+.bgrid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+option{background:#0b1e17;color:var(--tx)}
+.bx2{aspect-ratio:1;border-radius:8px;border:2px solid var(--em);background:#123526;display:grid;place-items:center;font-size:12px;cursor:pointer}
+.bx2.w{border-color:var(--gold);background:#3a3010}.bx2.b{border-color:var(--red);background:#3d1414}.bx2.sel{outline:2px solid var(--gold2);outline-offset:2px}
+@media(max-width:1200px){.two{grid-template-columns:1fr}.bot{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:repeat(3,1fr)}.mid{grid-template-columns:1fr}}
+@media(max-width:800px){body{grid-template-columns:1fr}aside{display:none}.kpis,.bot{grid-template-columns:1fr 1fr}.scene{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="logo"><b>رقيب</b><small>بوابة الرقابة الذكية</small></div>
+  <nav>
+    <a class="on" data-v="home">الصفحة الرئيسية</a><a data-v="gates">إدارة الدخول</a><a data-v="scan">الفحص الذكي</a><a data-v="trucks">الشاحنات</a>
+    <a data-v="boxes">العبوات</a><a data-v="fraud">الجودة والغش</a><a data-v="reports">التقارير والإحصاءات</a><a data-v="fraud">التنبيهات <span class="badge" id="bd">3</span></a><a data-v="users">المستخدمون</a>
+  </nav>
+</aside>
+
+<main>
+  <header>
+    <div><h1 id="ttl">مهرجان بريدة للتمور</h1><p>مراقبة وفحص التمور عند بوابات الدخول</p></div>
+    <div id="clock"></div>
+  </header>
+
+  <div id="v-home"><section class="kpis">
+    <div class="card kpi"><small>عدد الشاحنات اليوم</small><strong id="k1">1,245</strong><em>▲ 12%</em></div>
+    <div class="card kpi"><small>عدد العبوات المفحوصة</small><strong id="k2">28,560</strong><em>▲ 18%</em></div>
+    <div class="card kpi gold"><small>مطابق ميدانيًا</small><strong id="k3">95%</strong><small id="k3s">27,132 عبوة</small></div>
+    <div class="card kpi warn"><small>يتطلب تحقق اللجنة</small><strong id="k4">5%</strong><small id="k4s">1,428 عبوة</small></div>
+    <div class="card kpi"><small>متوسط زمن الإجراء</small><strong>50 ثانية</strong><em>▼ 35%</em></div>
+  </section>
+
+  <section class="mid">
+    <div class="card scene">
+      <div class="live"><i></i>دخول شاحنة - فحص مباشر</div>
+      <div class="gate">
+        <svg viewBox="0 0 520 380" preserveAspectRatio="xMidYMid slice">
+          <defs><linearGradient id="fr" x1="0" x2="1"><stop offset="0" stop-color="#f2dc94"/><stop offset="1" stop-color="#a8862a"/></linearGradient></defs>
+          <rect y="300" width="520" height="80" fill="#0a1a14"/>
+          <rect x="70" y="40" width="380" height="26" rx="6" fill="url(#fr)"/>
+          <rect x="70" y="40" width="26" height="290" fill="url(#fr)"/><rect x="424" y="40" width="26" height="290" fill="url(#fr)"/>
+          <circle cx="83" cy="120" r="9" fill="#2fd37a"/><circle cx="437" cy="120" r="9" fill="#2fd37a"/><circle cx="260" cy="53" r="8" fill="#2fd37a"/>
+          <rect x="150" y="90" width="220" height="200" rx="8" fill="#16241d" stroke="#d4af37" stroke-width="2"/>
+          <g id="boxes"></g>
+          <rect x="140" y="290" width="240" height="26" rx="6" fill="#3a3f3c"/>
+          <circle cx="180" cy="318" r="14" fill="#111"/><circle cx="340" cy="318" r="14" fill="#111"/>
+          <text x="260" y="30" fill="#f2dc94" font-size="16" text-anchor="middle" font-family="Tajawal">بوابة رقيب - مدينة التمور</text>
+        </svg>
+        <div class="beam"></div>
+      </div>
+      <div class="info">
+        <div><small>رقم الشاحنة</small><b id="i1">BRD-3921</b></div>
+        <div><small>وقت الدخول</small><b id="i2">10:24 AM</b></div>
+        <div><small>الصنف المصنّف</small><b id="i3">سكري</b></div>
+        <div><small>الكمية التقديرية</small><b id="i4">6,000 كجم</b></div>
+        <div><small>البوابة</small><b>1 - القصيم</b></div>
+      </div>
+    </div>
+
+    <div class="card result">
+      <h3>نتيجة الفحص الشاملة</h3>
+      <div class="head"><div class="tick" id="tick">✓</div><div><h2 id="rs">مطابق ميدانيًا</h2><small id="rt" style="color:var(--mut)">لا توجد مؤشرات غير طبيعية</small></div></div>
+      <small style="color:var(--mut)">مستوى الثقة <b id="cf" style="color:var(--gold2)">95%</b></small>
+      <div class="meter"><span id="cfb" style="width:95%"></span></div>
+      <div class="tabs" id="tabs"><button class="on" data-t="0">تفاصيل الفحص</button><button data-t="1">تحليل الحجم</button><button data-t="2">الفحص الداخلي</button><button data-t="3">العيوب</button></div>
+      <div id="tabBody"></div>
+    </div>
+  </section>
+
+  <section class="bot">
+    <div class="card"><h3>تحليل حجم التمور وتجانسها</h3>
+      <div class="dates" id="dates"></div>
+      <div class="stats"><div class="row"><span>عدد التمور المحللة</span><b>120</b></div><div class="row"><span>مؤشر التجانس</span><b class="g">92%</b></div><div class="row"><span>الحالة</span><b class="g">متجانس</b></div></div>
+    </div>
+    <div class="card"><h3>الفحص الداخلي (NIR)</h3>
+      <div class="nir"><svg viewBox="0 0 200 110"><defs><radialGradient id="rg"><stop offset="0" stop-color="#ff3b30"/><stop offset="1" stop-color="transparent"/></radialGradient><radialGradient id="dg" cx=".4" cy=".35"><stop offset="0" stop-color="#e8e8e8"/><stop offset="1" stop-color="#3b3b3b"/></radialGradient></defs><ellipse cx="100" cy="55" rx="78" ry="38" fill="url(#dg)" transform="rotate(-20 100 55)"/><circle class="hot" cx="92" cy="58" r="14" fill="url(#rg)"/></svg></div>
+      <div class="stats"><div class="row"><span>نسبة الرطوبة</span><b>16%</b></div><div class="row"><span>مؤشر التلف</span><b class="g">لا يوجد</b></div></div>
+    </div>
+    <div class="card"><h3>عمق المسح داخل الحمولة (mmWave)</h3>
+      <div id="layers"></div>
+      <div class="note">هذا المؤشر هو الجزء المطلوب إثباته بالنموذج الأولي: إلى أي عمق تبقى الدقة مقبولة مع تكدس الكراتين.</div>
+    </div>
+    <div class="card"><h3>أحدث الشاحنات</h3>
+      <table><thead><tr><th>الوقت</th><th>رقم الشاحنة</th><th>الصنف</th><th>الكمية</th><th>النتيجة</th></tr></thead><tbody id="rows"></tbody></table>
+    </div>
+  </section></div>
+<div id="v-page" hidden></div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const types=["سكري","خلاص","صفري","برحي","سكري","مجدول"];
+let trucks=[["10:24 AM","BRD-3921","سكري","6,000",1],["10:21 AM","QSM-8843","خلاص","4,500",1],["10:18 AM","BRD-2210","صفري","5,200",0],["10:15 AM","QSM-7721","برحي","3,800",1],["10:12 AM","BRD-6680","سكري","6,100",1]];
+let total=1245,boxes=28560,bad=1428;
+
+(function(){let s="";for(let r=0;r<5;r++)for(let c=0;c<8;c++)s+=`<rect class="bx" x="${160+c*26}" y="${100+r*36}" width="22" height="30" rx="3" fill="#b9722f" stroke="#7a4a1c"/>`;$("boxes").innerHTML=s})();
+$("dates").innerHTML=["4.2","4.1","4.3","4.1","4.0","4.5","4.2","4.1","4.3","3.9","3.1","4.1"].map(v=>`<div class="d ${v<3.5?'x':''}">${v} cm</div>`).join("");
+$("layers").innerHTML=[["الصف الأول",97],["الصف الثاني",93],["الصف الثالث",86],["الصف الرابع",74],["الصف الخامس",58]].map(l=>`<div class="layer"><div style="display:flex;justify-content:space-between"><span>${l[0]}</span><b style="color:var(--gold2)">${l[1]}%</b></div><div class="bar"><i style="width:${l[1]}%"></i></div></div>`).join("");
+
+const tabs=[
+ ()=>`<div class="row"><span>الصنف</span><b>${$("i3").textContent}</b></div><div class="row"><span>درجة النضج</span><b>مناسب</b></div><div class="row"><span>نسبة الرطوبة</span><b>16%</b></div><div class="row"><span>الحالة الداخلية</span><b class="${cur?'g':'r'}">${cur?'سليمة':'مشتبه بها'}</b></div><div class="row"><span>العيوب السطحية</span><b class="${cur?'g':'r'}">${cur?'لا يوجد':'صندوقان'}</b></div>`,
+ ()=>`<div class="row"><span>متوسط الطول</span><b>4.1 cm</b></div><div class="row"><span>متوسط العرض</span><b>2.3 cm</b></div><div class="row"><span>مؤشر التجانس</span><b class="g">92%</b></div><div class="row"><span>تمور خارج الحجم</span><b class="r">3</b></div>`,
+ ()=>`<div class="row"><span>رطوبة NIR</span><b>16%</b></div><div class="row"><span>مؤشر التلف</span><b class="${cur?'g':'r'}">${cur?'لا يوجد':'نقطة ساخنة'}</b></div><div class="row"><span>عمق المسح الفعّال</span><b>4 صفوف</b></div>`,
+ ()=>`<div class="row"><span>مواضع الاشتباه</span><b class="${cur?'g':'r'}">${cur?'0':'2'}</b></div><div class="row"><span>الإجراء</span><b>${cur?'مرور مباشر':'تحويل للجنة'}</b></div><div class="row"><span>التقرير الرقمي</span><b class="g">جاهز</b></div>`
+];
+let cur=1,tab=0;
+function drawTab(){$("tabBody").innerHTML=tabs[tab]();document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("on",+b.dataset.t===tab))}
+$("tabs").onclick=e=>{if(e.target.dataset.t){tab=+e.target.dataset.t;drawTab()}};
+function drawRows(newest){$("rows").innerHTML=trucks.slice(0,6).map((t,i)=>`<tr class="${i==0&&newest?'new':''}"><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td><td>${t[3]}</td><td class="${t[4]?'ok':'no'}">${t[4]?'✓ مطابق':'⚠ يتطلب تحقق'}</td></tr>`).join("")}
+function drawKpis(){$("k1").textContent=total.toLocaleString("en");$("k2").textContent=boxes.toLocaleString("en");const p=Math.round(bad/boxes*100);$("k3").textContent=100-p+"%";$("k4").textContent=p+"%";$("k3s").textContent=(boxes-bad).toLocaleString("en")+" عبوة";$("k4s").textContent=bad.toLocaleString("en")+" عبوة"}
+function setResult(){
+ $("tick").className="tick"+(cur?"":" bad");$("tick").textContent=cur?"✓":"!";
+ $("rs").className=cur?"":"bad";$("rs").textContent=cur?"مطابق ميدانيًا":"يتطلب تحقق اللجنة";
+ $("rt").textContent=cur?"لا توجد مؤشرات غير طبيعية":"مؤشرات غير طبيعية في صندوقين";
+ const c=cur?94+Math.floor(Math.random()*4):71+Math.floor(Math.random()*8);$("cf").textContent=c+"%";$("cfb").style.width=c+"%";
+ document.querySelectorAll(".bx").forEach((b,i)=>b.setAttribute("fill",(!cur&&(i==13||i==22))?"#c0392b":"#b9722f"));
+ drawTab();
+}
+function simulate(){
+ const d=new Date(),t=d.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+ const id=(Math.random()>.5?"BRD-":"QSM-")+(1000+Math.floor(Math.random()*8999));
+ const ty=types[Math.floor(Math.random()*types.length)],q=(3000+Math.floor(Math.random()*35)*100).toLocaleString("en");
+ cur=Math.random()>.2?1:0;
+ trucks.unshift([t,id,ty,q,cur]);total++;const n=20+Math.floor(Math.random()*15);boxes+=n;if(!cur)bad+=3;
+ $("i1").textContent=id;$("i2").textContent=t;$("i3").textContent=ty;$("i4").textContent=q+" كجم";
+ setResult();drawRows(true);drawKpis();renderView();
+}
+setInterval(()=>$("clock").textContent=new Date().toLocaleTimeString("en-GB"),1000);
+setResult();drawRows();drawKpis();setInterval(simulate,7000);
+
+/* ===== الصفحات ===== */
+const now=()=>new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
+const titles={home:"مهرجان بريدة للتمور",gates:"إدارة الدخول",scan:"الفحص الذكي",trucks:"الشاحنات",boxes:"العبوات",fraud:"الجودة والغش",reports:"التقارير والإحصاءات",users:"المستخدمون",soon:"قريبًا"};
+let view="home",f={q:"",s:"all"},sel=0,scan={i:0,on:0,done:0};
+const gates=[{n:"بوابة 1 - القصيم",open:1,q:3},{n:"بوابة 2 - الشمال",open:1,q:5},{n:"بوابة 3 - الجنوب",open:0,q:0}];
+let pending=[["QSM-3050","خلاص"],["BRD-7412","سكري"],["BRD-5093","برحي"]];
+let alerts=[["خلط أصناف داخل العبوات","BRD-2210","عالية"],["رطوبة مرتفعة (21%)","QSM-5532","متوسطة"],["الطبقة السفلية تختلف عن العلوية","BRD-4417","عالية"]].map(a=>({t:a[0],id:a[1],s:a[2],done:0}));
+trucks.push(["10:09 AM","QSM-5532","خلاص","4,100",0],["10:05 AM","BRD-4417","سكري","5,600",0],["10:01 AM","QSM-1120","برحي","3,900",1],["09:58 AM","BRD-8804","صفري","4,800",1],["09:52 AM","QSM-9031","سكري","6,200",1]);
+const gt=t=>t[1].startsWith("BRD")?"بوابة 1":"بوابة 2";
+function mk(seed,ok){let s=0;for(const ch of seed)s+=ch.charCodeAt(0);const r=()=>(s=(s*9301+49297)%233280)/233280;return Array.from({length:40},(_,i)=>{const x=r(),st=ok?(x>.93?1:0):([13,22].includes(i)?2:x>.85?1:0);return{n:i+1,row:Math.floor(i/8)+1,st,m:(13+r()*4+(st?4:0)).toFixed(1),w:(14.6+r()*.8).toFixed(1)}})}
+const rowsHtml=()=>{const q=f.q.toLowerCase();return trucks.filter(t=>(f.s=="all"||(f.s=="ok")==!!t[4])&&(t[1]+" "+t[2]).toLowerCase().includes(q)).map(t=>`<tr><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td><td>${t[3]} كجم</td><td>${gt(t)}</td><td class="${t[4]?'ok':'no'}">${t[4]?'✓ مطابق':'⚠ يتطلب تحقق'}</td></tr>`).join("")||'<tr><td colspan="6">لا توجد نتائج مطابقة</td></tr>'};
+const chip=(v,l)=>`<button class="btn ${f.s==v?'':'g'}" data-a="f" data-v="${v}">${l}</button>`;
+const roles=["مدير النظام","مفتش","عضو لجنة الجودة","مراقب إحصاء"];
+let users=[{n:"عبدالله القحطاني",r:"مدير النظام",g:"الكل",on:1},{n:"محمد العتيبي",r:"مفتش",g:"بوابة 1",on:1},{n:"سعد الشمري",r:"مفتش",g:"بوابة 2",on:1},{n:"فهد الدوسري",r:"عضو لجنة الجودة",g:"الكل",on:1},{n:"ناصر الحربي",r:"مراقب إحصاء",g:"الكل",on:0}];
+function exp(){const R=[["الوقت","رقم الشاحنة","الصنف","الكمية كجم","البوابة","النتيجة"],...trucks.map(t=>[t[0],t[1],t[2],t[3].replace(/,/g,""),gt(t),t[4]?"مطابق":"يتطلب تحقق"])];const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+R.map(r=>r.join(",")).join("\n")],{type:"text/csv;charset=utf-8"}));a.download="raqeeb-report.csv";a.click()}
+const lastAdmin=i=>users[i].r=="مدير النظام"&&users.filter(u=>u.r=="مدير النظام"&&u.on).length<2;
+const V={
+trucks:()=>`<div class="card"><h3>الشاحنات (${trucks.length})</h3><div class="bar2"><input class="s" id="q" placeholder="ابحث برقم الشاحنة أو الصنف" value="${f.q}">${chip("all","الكل")}${chip("ok","مطابق")}${chip("no","يتطلب تحقق")}</div><table><thead><tr><th>الوقت</th><th>رقم الشاحنة</th><th>الصنف</th><th>الكمية</th><th>البوابة</th><th>النتيجة</th></tr></thead><tbody id="tb">${rowsHtml()}</tbody></table></div>`,
+scan:()=>{const st=["كاميرات RGB: المظهر واللون والحجم","حساس NIR: الرطوبة والتلف الداخلي","موجات mmWave: العمق داخل الكراتين","دمج البيانات (Sensor Fusion)","إصدار الدرجة والتقرير الرقمي"],r=scan.res;
+return `<div class="two"><div class="card"><h3>مسار الفحص الذكي</h3>${st.map((s,i)=>`<div class="st"><span class="${i<scan.i?'ok':''}">${i<scan.i?'✓':(scan.on&&i==scan.i?'◌':'○')}</span><span style="${scan.on&&i==scan.i?'color:var(--gold2)':''}">${s}</span></div>`).join("")}<div class="meter" style="margin:14px 0"><span style="width:${scan.i*20}%"></span></div><button class="btn" data-a="scan" ${scan.on?'disabled':''}>${scan.on?'جاري الفحص...':'بدء فحص شاحنة'}</button></div><div class="card"><h3>نتيجة آخر فحص</h3>${scan.done?`<div class="head"><div class="tick ${r[4]?'':'bad'}">${r[4]?'✓':'!'}</div><div><h2 style="color:${r[4]?'var(--em)':'#ff8b8b'}">${r[4]?'مطابق ميدانيًا':'يتطلب تحقق اللجنة'}</h2><small style="color:var(--mut)">${r[1]} - ${r[2]}</small></div></div><div class="row"><span>درجة الثقة</span><b>${$("cf").textContent}</b></div><div class="row"><span>الكمية</span><b>${r[3]} كجم</b></div>`:'<p style="color:var(--mut)">اضغط "بدء فحص شاحنة" لتشغيل المسح. العرض التجريبي يستغرق نحو 7 ثوانٍ، والفحص الفعلي بين 40 ثانية ودقيقة.</p>'}</div></div>`},
+gates:()=>`<div class="two"><div class="card"><h3>البوابات</h3>${gates.map((g,i)=>`<div class="st"><span class="${g.open?'ok':'no'}">●</span><b style="flex:1">${g.n}</b><small style="color:var(--mut)">الطابور: ${g.q}</small><button class="btn g" data-a="g" data-v="${i}">${g.open?'إغلاق':'فتح'}</button></div>`).join("")}</div><div class="card"><h3>بانتظار قرار الدخول (${pending.length})</h3>${pending.map((p,i)=>`<div class="st"><b style="flex:1">${p[0]} <small style="color:var(--mut)">${p[1]}</small></b><button class="btn" data-a="allow" data-v="${i}">سماح</button><button class="btn g" data-a="hold" data-v="${i}">للجنة</button></div>`).join("")||'<p style="color:var(--mut)">لا توجد شاحنات بالانتظار</p>'}</div></div>`,
+boxes:()=>{const t=trucks[0],L=mk(t[1],t[4]),c=[97,93,86,74,58],b=L[sel];return `<div class="two"><div class="card"><h3>عبوات الشاحنة ${t[1]} (${L.length} عبوة)</h3><div class="bgrid">${L.map((x,i)=>`<div class="bx2 ${['','w','b'][x.st]} ${i==sel?'sel':''}" data-a="bx" data-v="${i}">${x.n}</div>`).join("")}</div><p class="note">أخضر سليمة، ذهبي تحتاج مراجعة، أحمر مشتبه بها.</p></div><div class="card"><h3>تفاصيل العبوة ${b.n}</h3><div class="row"><span>الحالة</span><b class="${['g','','r'][b.st]}">${['سليمة','تحتاج مراجعة','مشتبه بها'][b.st]}</b></div><div class="row"><span>الصف</span><b>${b.row}</b></div><div class="row"><span>الوزن</span><b>${b.w} كجم</b></div><div class="row"><span>الرطوبة</span><b>${b.m}%</b></div><div class="row"><span>ثقة القياس</span><b>${c[b.row-1]}%</b></div></div></div>`},
+fraud:()=>{const o=alerts.filter(a=>!a.done).length;return `<div class="kpis" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px"><div class="card kpi warn"><small>تنبيهات مفتوحة</small><strong>${o}</strong></div><div class="card kpi gold"><small>تم التحقق منها</small><strong>${alerts.length-o}</strong></div><div class="card kpi"><small>نسبة الاشتباه اليوم</small><strong>${$("k4").textContent}</strong></div></div><div class="card"><h3>تنبيهات الجودة والغش</h3>${alerts.map((a,i)=>`<div class="st"><span class="${a.done?'ok':'no'}">${a.done?'✓':'⚠'}</span><b style="flex:1">${a.t} <small style="color:var(--mut)">${a.id} - أولوية ${a.s}</small></b>${a.done?'<small class="ok">تم التحقق</small>':`<button class="btn" data-a="ok" data-v="${i}">تم التحقق</button>`}</div>`).join("")}</div>`},
+reports:()=>{const n=trucks.length,ok=trucks.filter(t=>t[4]).length,kg=trucks.reduce((s,t)=>s+ +t[3].replace(/,/g,""),0),ty={},gg={};trucks.forEach(t=>{ty[t[2]]=(ty[t[2]]||0)+1;gg[gt(t)]=(gg[gt(t)]||0)+1});
+const bar=(l,v,m,c)=>`<div class="layer"><div style="display:flex;justify-content:space-between"><span>${l}</span><b style="color:var(--gold2)">${v.toLocaleString("en")}</b></div><div class="bar"><i style="width:${v/m*100}%${c?';background:'+c:''}"></i></div></div>`;
+const mx=Math.max(...Object.values(ty)),days=[["الخميس",1010],["الجمعة",1085],["السبت",1140],["الأحد",1190],["الاثنين",1075],["الثلاثاء",1160],["الأربعاء",total]];
+return `<div class="kpis" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px"><div class="card kpi"><small>شاحنات في السجل</small><strong>${n}</strong></div><div class="card kpi gold"><small>مطابقة</small><strong>${ok}</strong><small>${Math.round(ok/n*100)}%</small></div><div class="card kpi warn"><small>تتطلب تحقق</small><strong>${n-ok}</strong><small>${Math.round((n-ok)/n*100)}%</small></div><div class="card kpi"><small>إجمالي الكمية</small><strong>${(kg/1000).toFixed(1)}</strong><small>طن</small></div></div>
+<div class="two" style="grid-template-columns:1fr 1fr;margin-bottom:14px"><div class="card"><h3>الشاحنات حسب الصنف</h3>${Object.entries(ty).map(e=>bar(e[0],e[1],mx)).join("")}</div><div class="card"><h3>الشاحنات حسب البوابة</h3>${Object.entries(gg).map(e=>bar(e[0],e[1],n)).join("")}<div class="note">مؤشر التجانس العام 92% ومتوسط زمن الإجراء 50 ثانية.</div></div></div>
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h3>عدد الشاحنات خلال 7 أيام</h3><button class="btn" data-a="ex">تصدير السجل CSV</button></div>${days.map(d=>bar(d[0],d[1],1300)).join("")}</div>`},
+users:()=>`<div class="two"><div class="card"><h3>المستخدمون (${users.length})</h3><table><thead><tr><th>الاسم</th><th>الدور</th><th>البوابة</th><th>الحالة</th><th></th></tr></thead><tbody>${users.map((u,i)=>`<tr><td>${u.n}</td><td>${u.r}</td><td>${u.g}</td><td class="${u.on?'ok':'no'}">${u.on?'نشط':'معطّل'}</td><td><button class="btn g" data-a="ut" data-v="${i}">${u.on?'تعطيل':'تفعيل'}</button> <button class="btn g" data-a="ud" data-v="${i}">حذف</button></td></tr>`).join("")}</tbody></table></div><div class="card"><h3>إضافة مستخدم</h3><div class="bar2" style="flex-direction:column"><input class="s" id="un" placeholder="الاسم الكامل" style="width:100%"><select class="s" id="ur" style="width:100%">${roles.map(r=>`<option>${r}</option>`).join("")}</select><button class="btn" data-a="ua">إضافة</button></div><div class="note">مدير النظام يملك كل الصلاحيات. لا يمكن حذف أو تعطيل آخر مدير.</div></div></div>`,
+soon:()=>'<div class="card"><h3>قريبًا</h3><p style="color:var(--mut)">هذه الصفحة خارج نطاق النموذج الأولي الحالي.</p></div>'
+};
+function renderView(){if(view=="home")return;$("v-page").innerHTML=V[view]();}
+function go(v,el){view=v;$("v-home").hidden=v!="home";$("v-page").hidden=v=="home";$("ttl").textContent=titles[v];document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a===el));renderView()}
+function runScan(){if(scan.on)return;scan={i:0,on:1,done:0};step()}
+function step(){renderView();if(scan.on)setTimeout(()=>{scan.i++;if(scan.i==5){scan.on=0;simulate();scan.done=1;scan.res=trucks[0]}step()},1400)}
+document.querySelector("nav").onclick=e=>{const a=e.target.closest("a");if(a)go(a.dataset.v,a)};
+document.addEventListener("input",e=>{if(e.target.id=="q"){f.q=e.target.value;const tb=$("tb");if(tb)tb.innerHTML=rowsHtml()}});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,v=+b.dataset.v;
+ if(a=="scan")return runScan();
+ if(a=="ex")return exp();
+ if(a=="f")f.s=b.dataset.v;
+ else if(a=="g")gates[v].open^=1;
+ else if(a=="allow"){const p=pending.splice(v,1)[0];trucks.unshift([now(),p[0],p[1],"4,200",1]);total++;drawKpis()}
+ else if(a=="hold"){const p=pending.splice(v,1)[0];alerts.unshift({t:"إحالة للجنة قبل الدخول",id:p[0],s:"متوسطة",done:0})}
+ else if(a=="ok")alerts[v].done=1;
+ else if(a=="bx")sel=v;
+ else if(a=="ut"){if(!lastAdmin(v)||!users[v].on)users[v].on^=1}
+ else if(a=="ud"){if(!lastAdmin(v))users.splice(v,1)}
+ else if(a=="ua"){const n=$("un").value.trim();if(n)users.unshift({n,r:$("ur").value,g:"بوابة 1",on:1})}
+ renderView()});
+</script>
+</body>
+</html>
